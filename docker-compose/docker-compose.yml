@@ -8,8 +8,10 @@ services:
     networks:
       - jenkins
     volumes:
-      - /var/jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
+      # - /var/jenkins_home:/var/jenkins_home
+      # - /var/run/docker.sock:/var/run/docker.sock
+      - /Users/heitlm/docker/jenkins_home:/var/jenkins_home
+      - /Users/heitlm/docker/docker.sock:/var/run/docker.sock
   postgres:
     image: postgres:9.6
     networks:
@@ -18,7 +20,8 @@ services:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonarpasswd
     volumes:
-      - /var/postgres-data:/var/lib/postgresql/data
+      # - /var/postgres-data:/var/lib/postgresql/data
+      - /Users/heitlm/docker/postgres-data:/var/lib/postgresql/data
   sonarqube:
     image: sonarqube:lts
     ports:
@@ -35,5 +38,3 @@ services:
 
 networks:
   jenkins:
-
-
