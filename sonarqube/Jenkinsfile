@@ -1,5 +1,5 @@
 node {
-    def myGradleContainer = docker.image('gradle')
+    def myGradleContainer = docker.image('gradle:jdk8-alpine')
     sh 'echo mark1'
     myGradleContainer.pull()
     sh 'echo mark2'
