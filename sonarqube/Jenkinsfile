@@ -5,7 +5,7 @@ node {
     sh 'echo mark2'
 
     stage('prep') {
-        git url: 'https://github.com/wardviaene/gs-gradle.git'
+        git url: 'https://github.com/mjheitland/gs-gradle.git'
     }
 
     stage('build') {
@@ -14,7 +14,7 @@ node {
       }
     }
 
-    stage('sonar-scanner') {
+    stage(' ') {
       def sonarqubeScannerHome = tool name: 'sonar', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
       withCredentials([string(credentialsId: 'sonar', variable: 'sonarLogin')]) {
         sh "${sonarqubeScannerHome}/bin/sonar-scanner -e -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=${sonarLogin} -Dsonar.projectName=gs-gradle -Dsonar.projectVersion=${env.BUILD_NUMBER} -Dsonar.projectKey=GS -Dsonar.sources=complete/src/main/ -Dsonar.tests=complete/src/test/ -Dsonar.language=java -Dsonar.java.binaries=."
