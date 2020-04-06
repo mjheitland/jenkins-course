@@ -3,15 +3,14 @@
 
 
 # Commands to run sonarqube project using docker-compose
-Here I am using the following folder structure:
-/Users/heitlm/
-  docker
-  docker.sock
-  jenkins_home
 
-1. docker-compose up
-2. docker ps
-4. Get Jenkins admin password: docker-compose logs -f <Jenkins container id>
-3. Check Sonarqube is running: docker-compose logs -f sonarqube
-4. Configure Jenkins: http://localhost:8080
-5. Log into SonarQube with admin/admin: http://localhost:9000
+Jenkins and Postgres files will be stored in $HOME/docker/*
+
+1. cd sonarqube
+2. docker-compose up
+3. docker ps (should show four containers: jenkins, docker, postgres, sonarcube)
+4. Get Jenkins admin password from log file: docker-compose logs -f <Jenkins container id>
+5. Configure Jenkins: http://localhost:8080, install suggested plugins, add "Sonarqube Scanner" plugin
+6. Check Sonarqube is running: docker-compose logs -f sonarqube (might need a second run of docker-compose due to dependencies)
+7. Log into SonarQube with admin/admin: http://localhost:9000, go to Account/Security and generate a token
+8. In jenkins add copied token to credentials (credentials/secret text/id=sonar)

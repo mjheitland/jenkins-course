@@ -1,9 +1,12 @@
 version: '2'
 
-services:
+networks:
+  jenkins:
 
+services:
   jenkins:
     # image: jenkins/jenkins:lts
+    container_name: jenkins
     image: jenkinsci/blueocean
     ports:
       - "8080:8080"
@@ -20,6 +23,7 @@ services:
       - DOCKER_TLS_VERIFY=1
 
   docker:
+    container_name: docker
     image: docker:dind
     privileged: true
     networks:
@@ -32,6 +36,7 @@ services:
       - DOCKER_TLS_CERTDIR=/certs
 
   postgres:
+    container_name: postgres
     image: postgres:9.6
     networks:
       - jenkins
@@ -42,6 +47,7 @@ services:
       - $HOME/docker/postgres-data:/var/lib/postgresql/data
 
   sonarqube:
+    container_name: sonarqube
     image: sonarqube:lts
     ports:
       - "9000:9000"
@@ -54,6 +60,3 @@ services:
       SONARQUBE_JDBC_URL: "jdbc:postgresql://postgres:5432/sonar"
     depends_on: 
       - postgres
-
-networks:
-  jenkins:
