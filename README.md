@@ -14,3 +14,17 @@ Jenkins and Postgres files will be stored in $HOME/docker/*
 6. Check Sonarqube is running: docker-compose logs -f sonarqube (might need a second run of docker-compose due to dependencies)
 7. Log into SonarQube with admin/admin: http://localhost:9000, go to Account/Security and generate a token
 8. In jenkins add copied token to credentials (credentials/secret text/id=sonar)
+
+# Arch Linux
+
+1. Install with `sudo pacman -Sy docker docker-compose`
+2. Add myself to docker group, then logout and log in again: `usermod -aG docker $(whoami)`
+3. `mkdir ~/docker`
+4. `sudo chown -R 1000 ~/docker`
+5. Adjust limits:
+   ```
+   sysctl -w vm.max_map_count=262144
+   sysctl -w fs.file-max=65536
+   ```
+
+
