@@ -4,6 +4,19 @@ networks:
   jenkins:
 
 services:
+  docker:
+    container_name: docker
+    image: docker:dind
+    privileged: true
+    networks:
+      - jenkins
+    volumes:
+      - $HOME/docker/jenkins-docker-certs:/certs/client
+      - $HOME/docker/jenkins-home:/var/jenkins_home
+      - $HOME:/home
+    environment: 
+      - DOCKER_TLS_CERTDIR=/certs
+
   jenkins:
     # image: jenkins/jenkins:lts
     container_name: jenkins
@@ -21,19 +34,6 @@ services:
       - DOCKER_CERT_PATH=/certs/client
       - DOCKER_TLS_CERTDIR=/certs
       - DOCKER_TLS_VERIFY=1
-
-  docker:
-    container_name: docker
-    image: docker:dind
-    privileged: true
-    networks:
-      - jenkins
-    volumes:
-      - $HOME/docker/jenkins-docker-certs:/certs/client
-      - $HOME/docker/jenkins-home:/var/jenkins_home
-      - $HOME:/home
-    environment: 
-      - DOCKER_TLS_CERTDIR=/certs
 
   postgres:
     container_name: postgres
