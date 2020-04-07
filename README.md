@@ -7,7 +7,7 @@
 Jenkins and Postgres files will be stored in $HOME/docker/*
 
 1. cd sonarqube
-2. docker-compose up -
+2. docker-compose up -d
 3. docker ps (should show four containers: jenkins, docker, postgres, sonarcube)
 4. Get Jenkins admin password from log file: docker-compose logs -f jenkins
 5. Configure Jenkins: http://localhost:8080, install suggested plugins, add "Sonarqube Scanner" plugin
