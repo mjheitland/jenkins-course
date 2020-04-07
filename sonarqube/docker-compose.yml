@@ -1,4 +1,9 @@
-version: '2'
+version: '3'
+
+volumes:
+  postgres-data:
+  jenkins-docker-certs:
+  jenkins-home:
 
 networks:
   jenkins:
@@ -11,10 +16,10 @@ services:
     networks:
       - jenkins
     volumes:
-      - $HOME/docker/jenkins-docker-certs:/certs/client
-      - $HOME/docker/jenkins-home:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client
+      - jenkins-home:/var/jenkins_home
       - $HOME:/home
-    environment: 
+    environment:
       - DOCKER_TLS_CERTDIR=/certs
 
   jenkins:
@@ -26,10 +31,10 @@ services:
     networks:
       - jenkins
     volumes:
-      - $HOME/docker/jenkins-docker-certs:/certs/client:ro
-      - $HOME/docker/jenkins-home:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+      - jenkins-home:/var/jenkins_home
       - $HOME:/home
-    environment: 
+    environment:
       - DOCKER_HOST=tcp://docker:2376
       - DOCKER_CERT_PATH=/certs/client
       - DOCKER_TLS_CERTDIR=/certs
@@ -44,7 +49,7 @@ services:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonarpasswd
     volumes:
-      - $HOME/docker/postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
 
   sonarqube:
     container_name: sonarqube
@@ -58,5 +63,5 @@ services:
       SONARQUBE_JDBC_USERNAME: sonar
       SONARQUBE_JDBC_PASSWORD: sonarpasswd
       SONARQUBE_JDBC_URL: "jdbc:postgresql://postgres:5432/sonar"
-    depends_on: 
+    depends_on:
       - postgres
