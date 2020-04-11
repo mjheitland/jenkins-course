@@ -3,7 +3,7 @@ version: '3'
 volumes:
   postgres-data:
   jenkins-docker-certs:
-  jenkins-home:
+  jenkins-data:
 
 networks:
   jenkins:
@@ -17,7 +17,7 @@ services:
       - jenkins
     volumes:
       - jenkins-docker-certs:/certs/client
-      - jenkins-home:/var/jenkins_home
+      - jenkins-data:/var/jenkins_home
       - $HOME:/home
     environment:
       - DOCKER_TLS_CERTDIR=/certs
@@ -32,7 +32,7 @@ services:
       - jenkins
     volumes:
       - jenkins-docker-certs:/certs/client:ro
-      - jenkins-home:/var/jenkins_home
+      - jenkins-data:/var/jenkins_home
       - $HOME:/home
     environment:
       - DOCKER_HOST=tcp://docker:2376
